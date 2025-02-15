@@ -1,5 +1,4 @@
-from math import sqrt
-from typing import Union
+from vec import vec2
 
 
 class HexGrid:
@@ -26,8 +25,8 @@ class HexGrid:
             output = f"{output}\n"
         return output
 
-    def get_item(self, x: int, y: int) -> int:
-        return self._grid[x][y]
+    def get_item(self, pos: vec2) -> int:
+        return self._grid[pos.x][pos.y]
 
-    def set_item(self, x: int, y: int, value: int) -> None:
-        self._grid[x][y] = value
+    def set_item(self, pos: vec2, value: int) -> None:
+        self._grid[pos.x][pos.y] = value
