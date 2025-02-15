@@ -1,5 +1,4 @@
 
-from enum import Enum
 
 
 class Constant:
@@ -9,10 +8,10 @@ class Constant:
     
     GRID_SIZE = 9
 
-class Dir(Enum):
+class Dir:
     LEFT = 0
     UP_LEFT = 1
     UP_RIGHT = 2
     RIGHT = 3
-    DOWN_RIGH = 4
+    DOWN_RIGHT = 4
     DOWN_LEFT = 5

@@ -30,7 +30,3 @@ class HexGrid:
 
     def set_item(self, pos: vec2, value: int) -> None:
         self._grid[pos.x][pos.y] = value
-
-    def to_hex_coordinate(self, pos: vec2) -> vec2:
-        
-        return vec2(0, 0)
