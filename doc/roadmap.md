@@ -15,3 +15,4 @@
 - d. [ ] Gérer la boucle de gameplay dans AbaloneNode()
 - e. [ ] Animer le jeu
 - f. [ ] Ajouter un menu principale
+- g. [ ] Ajouter du son

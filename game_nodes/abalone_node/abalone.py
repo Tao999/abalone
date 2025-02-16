@@ -3,6 +3,7 @@ from utils.constants import Const, Dir
 from utils.hexgrid import HexGrid
 from utils.vec import vec2
 
+
 class Abalone:
     def __init__(self) -> None:
         self._board = HexGrid(Const.GRID_SIZE)
@@ -10,7 +11,7 @@ class Abalone:
         self.current_turn: int = 0
         self._selection_direction: int = Dir.LEFT
         self._init_balls()
-    
+
     def _init_balls(self) -> None:
         for i in range(2, 7):
             self._board.set_item(vec2(i, 0), Const.PLAYER_TWO)
@@ -24,14 +25,14 @@ class Abalone:
             self._board.set_item(vec2(i, 7), Const.PLAYER_ONE)
         for i in range(3, 6):
             self._board.set_item(vec2(i, 6), Const.PLAYER_ONE)
-    
+
     def get_grid_str(self, print_separator=True) -> str:
         # Affichage des coordonnés x
         output = "y\\x)0)1)2)3)4)5)6)7)8)\n"
         for i in range(Const.GRID_SIZE):
             # Affichage des coordonnés x
             output = f"{output}{i}."
-            if i%2:
+            if i % 2:
                 # Décalage due à la grille hex
                 output = f"{output} "
             if print_separator:
@@ -48,18 +49,18 @@ class Abalone:
                     output = f"{output} {separator}"
             output = f"{output}\n"
         return f"{output}y/x)0)1)2)3)4)5)6)7)8)"
-    
+
     def _is_in_board(self, pos: vec2) -> bool:
         copy_pos = vec2(pos.x, pos.y)
         if copy_pos.y < 0 or copy_pos.y >= Const.GRID_SIZE:
             return False
         center = ceil(Const.GRID_SIZE/2)
         copy_pos.y -= center
-        
+
         rognage = abs(0.5*copy_pos.y+0.5)
 
-        return floor(rognage) <= copy_pos.x < Const.GRID_SIZE- ceil(rognage)
-    
+        return floor(rognage) <= copy_pos.x < Const.GRID_SIZE - ceil(rognage)
+
     def select_balls_to_move(self, selected_pos: vec2, direction: int, nb_ball: int) -> bool:
         if nb_ball > 3 or nb_ball < 1:
             return False
@@ -67,8 +68,9 @@ class Abalone:
         selected_balls = [selected_pos]
 
         for _ in range(nb_ball-1):
-            selected_balls.append(self._get_next_position(selected_balls[-1], direction))
-        
+            selected_balls.append(self._get_next_position(
+                selected_balls[-1], direction))
+
         for ball in selected_balls:
             if not self._is_in_board(ball):
                 return False
@@ -82,20 +84,19 @@ class Abalone:
                 return False
         return True
 
-
     def _get_next_position(self, current_pos: vec2, direction: int) -> vec2:
         dir_v = direction
         x = floor(dir_v*1.6-2)/2 if dir_v <= 3 else -dir_v+4.5
         if current_pos.y % 2:
-            x+=0.5
+            x += 0.5
         y = floor(sin(-dir_v)+0.5)
         next_pos = vec2(floor(x+current_pos.x), floor(y+current_pos.y))
         return next_pos
-    
+
     def move_selected_balls(self, direction: int) -> bool:
         if not self._is_move_legal(direction):
             return False
-        
+
         if self._selection_direction == direction:
             self._select_balls.reverse()
             self._selection_direction = (self._selection_direction + 6) % 6
@@ -120,10 +121,10 @@ class Abalone:
             if (
                 target_pos not in self._select_balls and
                 self._board.get_item(target_pos) != Const.NO_PLAYER
-                ):
+            ):
                 return False
         return True
-    
+
     def _translate_ball(self, ball: vec2, direction: int) -> None:
         player_moving = self._board.get_item(ball)
         target_pos = self._get_next_position(ball, direction)
@@ -142,28 +143,28 @@ class Abalone:
         while (
             self._is_in_board(target_dir) and
             player_at_target != Const.NO_PLAYER
-            ):
+        ):
             if (
                 player_at_target != self.get_player_turn() and
                 player_at_target != Const.NO_PLAYER
-                ):
+            ):
                 oposite_force += 1
             target_dir = self._get_next_position(target_dir, direction)
             player_at_target = self._board.get_item(target_dir)
-        
+
         if player_force <= oposite_force:
             return False
 
         for ball in self._select_balls:
             self._translate_ball(ball, direction)
         return True
-    
+
     def get_player_turn(self) -> int:
         return self.current_turn % 2+1
-    
+
     def next_turn(self) -> None:
         self.current_turn += 1
-    
+
     def player_who_win(self):
         score_p1 = self.get_score_of(Const.PLAYER_ONE)
         score_p2 = self.get_score_of(Const.PLAYER_TWO)
@@ -187,4 +188,3 @@ class Abalone:
             return self._board.get_item(pos)
         else:
             return -1
-        
