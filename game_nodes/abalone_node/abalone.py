@@ -181,3 +181,10 @@ class Abalone:
                 if self._board.get_item(pos) == player and self._is_in_board(pos):
                     score += 1
         return score
+
+    def get_ball_at(self, pos: vec2) -> int:
+        if self._is_in_board(pos):
+            return self._board.get_item(pos)
+        else:
+            return -1
+        

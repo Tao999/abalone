@@ -11,4 +11,7 @@
 ## 2. Création du mode graphique
 - a. [x] Faire une classe de gestion de fenêtre
 - b. [x] Faire une classe abstraite Node abstraite (méthode draw() et update())
-- c. [ ] Faire une Node qui gère abalone
+- c. [x] Dessiner AbaloneNode()
+- d. [ ] Gérer la boucle de gameplay dans AbaloneNode()
+- e. [ ] Animer le jeu
+- f. [ ] Ajouter un menu principale

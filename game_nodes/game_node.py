@@ -1,12 +1,15 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 from tkinter import Canvas
 
 class GameNode(ABC):
+    def __init__(self) -> None:
+        super().__init__()
+        self._nodes: list[GameNode] = []
 
-    @abstractmethod
-    def update(self, delta: float):
-        ...
+    def update(self, delta: float) -> None:
+        for node in self._nodes:
+            node.update(delta)
     
-    @abstractmethod
-    def draw(self, canvas: Canvas):
-        ...
+    def draw(self, canvas: Canvas) -> None:
+        for node in self._nodes:
+            node.draw(canvas)
