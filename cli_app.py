@@ -1,8 +1,8 @@
 from abalone import Abalone
 import re
 
-from constants import Constant
-from vec import vec2
+from utils.constants import Constant
+from utils.vec import vec2
 
 
 class CliApp():

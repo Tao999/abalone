@@ -1,4 +1,4 @@
-from vec import vec2
+from utils.vec import vec2
 
 
 class HexGrid:

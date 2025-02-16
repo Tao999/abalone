@@ -1,7 +1,7 @@
 from math import ceil, floor, sin
-from constants import Constant, Dir
-from hexgrid import HexGrid
-from vec import vec2
+from utils.constants import Constant, Dir
+from utils.hexgrid import HexGrid
+from utils.vec import vec2
 
 class Abalone:
     def __init__(self) -> None:
