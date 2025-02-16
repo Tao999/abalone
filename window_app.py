@@ -21,11 +21,19 @@ class WindowApp:
 
         self._nodes: list[GameNode] = []
 
-    def _mouse_callback(self, e: tk.Event) -> None:
+    def _mouse_motion_callback(self, e: tk.Event) -> None:
         mouse.set_position(vec2(e.x, e.y))
+    
+    def _mouse_pressed_callback(self, e: tk.Event) -> None:
+        mouse.set_button_pressed(True)
+    
+    def _mouse_release_callback(self, e: tk.Event) -> None:
+        mouse.set_button_pressed(False)
 
     def run(self) -> None:
-        self._root.bind('<Motion>', self._mouse_callback)
+        self._root.bind('<Motion>', self._mouse_motion_callback)
+        self._root.bind('<ButtonPress-1>', self._mouse_pressed_callback)
+        self._root.bind('<ButtonRelease-1>', self._mouse_release_callback)
         self._nodes.append(AbaloneNode())
         self.update()
         self._root.mainloop()

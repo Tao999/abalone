@@ -1,4 +1,4 @@
-from game_nodes.abalone_node.abalone import Abalone
+from utils.abalone import Abalone
 import re
 
 from utils.constants import Const

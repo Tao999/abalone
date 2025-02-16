@@ -14,8 +14,9 @@
 - c. [x] Dessiner AbaloneNode()
 - d. [x] Faire une fonction _world_grid_to_abalone_coord()
 - e. [x] Survoller les boules, et mettre l'outline en vert si elle correspond au joueur courant
-- f. [ ] Sélectionner les boules
-- g. [ ] Déplacer les boules
-- h. [ ] Animer le jeu
-- i. [ ] Ajouter un menu principale
-- j. [ ] Ajouter du son
+- f. [x] Faire un game state : ball_selection
+- g. [ ] Faire un game state : ball_push
+- h. [ ] Déplacer les boules
+- i. [ ] Animer le jeu
+- j. [ ] Ajouter un menu principale
+- k. [ ] Ajouter du son

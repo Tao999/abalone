@@ -75,8 +75,10 @@ class Abalone:
             if not self.is_in_board(ball):
                 return False
 
-        self._select_balls = selected_balls
-        return self._is_selected_balls_from_current_player(selected_balls)
+        if self._is_selected_balls_from_current_player(selected_balls):
+            self._select_balls = selected_balls
+            return True
+        return False
 
     def _is_selected_balls_from_current_player(self, selected_balls: list[vec2]) -> bool:
         for ball in selected_balls:
@@ -188,3 +190,6 @@ class Abalone:
             return self._board.get_item(pos)
         else:
             return -1
+
+    def get_selected_balls(self) -> list[vec2]:
+        return self._select_balls
