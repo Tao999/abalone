@@ -4,9 +4,11 @@ import time
 from game_nodes.abalone_node.abalone_node import AbaloneNode
 from game_nodes.game_node import GameNode
 from utils.constants import Const, VisuConst
+from utils.singletons import mouse
+from utils.vec import vec2
 
 
-class App:
+class WindowApp:
     def __init__(self, width: int, height: int) -> None:
         self._root = tk.Tk()
         self._root.title("Tkinter Canvas Loop")
@@ -19,7 +21,11 @@ class App:
 
         self._nodes: list[GameNode] = []
 
+    def _mouse_callback(self, e: tk.Event) -> None:
+        mouse.set_position(vec2(e.x, e.y))
+
     def run(self) -> None:
+        self._root.bind('<Motion>', self._mouse_callback)
         self._nodes.append(AbaloneNode())
         self.update()
         self._root.mainloop()
@@ -45,5 +51,5 @@ class App:
 if __name__ == "__main__":
     app_width = VisuConst.PADDING*2+VisuConst.BALL_SIZE*(Const.GRID_SIZE+1)
     app_height = app_width + 100
-    app = App(app_width, app_height)
+    app = WindowApp(app_width, app_height)
     app.run()

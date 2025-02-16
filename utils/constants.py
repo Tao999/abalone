@@ -14,9 +14,12 @@ class VisuConst:
     BALL_SPACE = 5
     DRAW_WIDTH = 3
 
-    PLAYER_COLOR = ["", "white", "black"]
+    PLAYER_COLOR = ["", "#c4c4c4", "#3a3a3a"]
 
-    BACKGROUND_COLOR = "#966639"
+    BACKGROUND_COLOR = "#654526"
+
+    HOVERED_BALL = "#00bf00"
+    NOT_HOVERED_BALL = "#000000"
 
 
 class Dir:

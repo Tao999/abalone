@@ -1,3 +1,4 @@
+from cmath import sqrt
 from dataclasses import dataclass
 
 
@@ -14,3 +15,9 @@ class vec2():
 
     def __str__(self):
         return f"({self.x},{self.y})"
+    
+    def distance(self, b) -> float:
+        A = self.x - b.x
+        B = self.y - b.y
+        result = sqrt(A*A + B*B)
+        return result.real

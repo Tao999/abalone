@@ -12,7 +12,10 @@
 - a. [x] Faire une classe de gestion de fenêtre
 - b. [x] Faire une classe abstraite Node abstraite (méthode draw() et update())
 - c. [x] Dessiner AbaloneNode()
-- d. [ ] Gérer la boucle de gameplay dans AbaloneNode()
-- e. [ ] Animer le jeu
-- f. [ ] Ajouter un menu principale
-- g. [ ] Ajouter du son
+- d. [x] Faire une fonction _world_grid_to_abalone_coord()
+- e. [ ] Survoller les boules, et mettre l'outline en vert si elle correspond au joueur courant
+- f. [ ] Sélectionner les boules
+- g. [ ] Déplacer les boules
+- h. [ ] Animer le jeu
+- i. [ ] Ajouter un menu principale
+- j. [ ] Ajouter du son

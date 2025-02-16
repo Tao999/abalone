@@ -42,7 +42,7 @@ class Abalone:
             output = f"{output}{separator}"
 
             for j in range(Const.GRID_SIZE):
-                if self._is_in_board(vec2(j, i)):
+                if self.is_in_board(vec2(j, i)):
                     # On affiche que les boules dans la grilles
                     output = f"{output}{self._board.get_item(vec2(j, i))}{separator}"
                 else:
@@ -50,7 +50,7 @@ class Abalone:
             output = f"{output}\n"
         return f"{output}y/x)0)1)2)3)4)5)6)7)8)"
 
-    def _is_in_board(self, pos: vec2) -> bool:
+    def is_in_board(self, pos: vec2) -> bool:
         copy_pos = vec2(pos.x, pos.y)
         if copy_pos.y < 0 or copy_pos.y >= Const.GRID_SIZE:
             return False
@@ -72,7 +72,7 @@ class Abalone:
                 selected_balls[-1], direction))
 
         for ball in selected_balls:
-            if not self._is_in_board(ball):
+            if not self.is_in_board(ball):
                 return False
 
         self._select_balls = selected_balls
@@ -111,7 +111,7 @@ class Abalone:
     def _is_move_legal(self, direction: int) -> bool:
         for ball in self._select_balls:
             next_pos = self._get_next_position(ball, direction)
-            if not self._is_in_board(next_pos):
+            if not self.is_in_board(next_pos):
                 return False
         return True
 
@@ -131,7 +131,7 @@ class Abalone:
         if self._board.get_item(target_pos) != Const.NO_PLAYER:
             self._translate_ball(target_pos, direction)
         self._board.set_item(ball, Const.NO_PLAYER)
-        if self._is_in_board(target_pos):
+        if self.is_in_board(target_pos):
             self._board.set_item(target_pos, player_moving)
 
     def _do_sumito(self, direction: int) -> bool:
@@ -141,7 +141,7 @@ class Abalone:
         target_dir = self._get_next_position(self._select_balls[0], direction)
         player_at_target = self._board.get_item(target_dir)
         while (
-            self._is_in_board(target_dir) and
+            self.is_in_board(target_dir) and
             player_at_target != Const.NO_PLAYER
         ):
             if (
@@ -179,12 +179,12 @@ class Abalone:
         for y in range(Const.GRID_SIZE):
             for x in range(Const.GRID_SIZE):
                 pos = vec2(x, y)
-                if self._board.get_item(pos) == player and self._is_in_board(pos):
+                if self._board.get_item(pos) == player and self.is_in_board(pos):
                     score += 1
         return score
 
     def get_ball_at(self, pos: vec2) -> int:
-        if self._is_in_board(pos):
+        if self.is_in_board(pos):
             return self._board.get_item(pos)
         else:
             return -1
