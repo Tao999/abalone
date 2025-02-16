@@ -7,8 +7,8 @@
 - d. [x] Faire bouger les boules séléctionnées sur la grille
 - e. [x] Implémenter les conditions de victoire
 - f. [x] Faire un jeu en cli
-- g. [ ] Faire le jeu avec tkinter
 
 ## 2. Création du mode graphique
-
-À faire.
+- a. [x] Faire une classe de gestion de fenêtre
+- b. [x] Faire une classe abstraite Node abstraite (méthode draw() et update())
+- c. [ ] Faire une Node qui gère abalone
