@@ -1,18 +1,16 @@
 import tkinter as tk
 import time
 
-from game_nodes.abalone_node.abalone_node import BALL_SIZE, PADDING, AbaloneNode
+from game_nodes.abalone_node.abalone_node import AbaloneNode
 from game_nodes.game_node import GameNode
-from utils.constants import Constant
-
-BACKGROUND_COLOR = "#966639"
+from utils.constants import Const, VisuConst
 
 class App:
     def __init__(self, width: int, height: int) -> None:
         self._root = tk.Tk()
         self._root.title("Tkinter Canvas Loop")
         self._root.resizable(False, False)
-        self._canvas = tk.Canvas(self._root, width=width, height=height, bg=BACKGROUND_COLOR)
+        self._canvas = tk.Canvas(self._root, width=width, height=height, bg=VisuConst.BACKGROUND_COLOR)
         self._canvas.pack()
         self._frame_delay = 1.0 / 120.0
         self._last_time = time.time()
@@ -44,7 +42,7 @@ class App:
     
 
 if __name__ == "__main__":
-    app_width = PADDING*2+BALL_SIZE*(Constant.GRID_SIZE+1)
+    app_width = VisuConst.PADDING*2+VisuConst.BALL_SIZE*(Const.GRID_SIZE+1)
     app_height = app_width + 100
     app = App(app_width, app_height)
     app.run()

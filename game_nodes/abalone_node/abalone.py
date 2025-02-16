@@ -1,11 +1,11 @@
 from math import ceil, floor, sin
-from utils.constants import Constant, Dir
+from utils.constants import Const, Dir
 from utils.hexgrid import HexGrid
 from utils.vec import vec2
 
 class Abalone:
     def __init__(self) -> None:
-        self._board = HexGrid(Constant.GRID_SIZE)
+        self._board = HexGrid(Const.GRID_SIZE)
         self._select_balls: list[vec2] = []
         self.current_turn: int = 0
         self._selection_direction: int = Dir.LEFT
@@ -13,22 +13,22 @@ class Abalone:
     
     def _init_balls(self) -> None:
         for i in range(2, 7):
-            self._board.set_item(vec2(i, 0), Constant.PLAYER_TWO)
+            self._board.set_item(vec2(i, 0), Const.PLAYER_TWO)
         for i in range(1, 7):
-            self._board.set_item(vec2(i, 1), Constant.PLAYER_TWO)
+            self._board.set_item(vec2(i, 1), Const.PLAYER_TWO)
         for i in range(3, 6):
-            self._board.set_item(vec2(i, 2), Constant.PLAYER_TWO)
+            self._board.set_item(vec2(i, 2), Const.PLAYER_TWO)
         for i in range(2, 7):
-            self._board.set_item(vec2(i, 8), Constant.PLAYER_ONE)
+            self._board.set_item(vec2(i, 8), Const.PLAYER_ONE)
         for i in range(1, 7):
-            self._board.set_item(vec2(i, 7), Constant.PLAYER_ONE)
+            self._board.set_item(vec2(i, 7), Const.PLAYER_ONE)
         for i in range(3, 6):
-            self._board.set_item(vec2(i, 6), Constant.PLAYER_ONE)
+            self._board.set_item(vec2(i, 6), Const.PLAYER_ONE)
     
     def get_grid_str(self, print_separator=True) -> str:
         # Affichage des coordonnés x
         output = "y\\x)0)1)2)3)4)5)6)7)8)\n"
-        for i in range(Constant.GRID_SIZE):
+        for i in range(Const.GRID_SIZE):
             # Affichage des coordonnés x
             output = f"{output}{i}."
             if i%2:
@@ -40,7 +40,7 @@ class Abalone:
                 separator = " "
             output = f"{output}{separator}"
 
-            for j in range(Constant.GRID_SIZE):
+            for j in range(Const.GRID_SIZE):
                 if self._is_in_board(vec2(j, i)):
                     # On affiche que les boules dans la grilles
                     output = f"{output}{self._board.get_item(vec2(j, i))}{separator}"
@@ -51,14 +51,14 @@ class Abalone:
     
     def _is_in_board(self, pos: vec2) -> bool:
         copy_pos = vec2(pos.x, pos.y)
-        if copy_pos.y < 0 or copy_pos.y >= Constant.GRID_SIZE:
+        if copy_pos.y < 0 or copy_pos.y >= Const.GRID_SIZE:
             return False
-        center = ceil(Constant.GRID_SIZE/2)
+        center = ceil(Const.GRID_SIZE/2)
         copy_pos.y -= center
         
         rognage = abs(0.5*copy_pos.y+0.5)
 
-        return floor(rognage) <= copy_pos.x < Constant.GRID_SIZE- ceil(rognage)
+        return floor(rognage) <= copy_pos.x < Const.GRID_SIZE- ceil(rognage)
     
     def select_balls_to_move(self, selected_pos: vec2, direction: int, nb_ball: int) -> bool:
         if nb_ball > 3 or nb_ball < 1:
@@ -119,7 +119,7 @@ class Abalone:
             target_pos = self._get_next_position(ball, direction)
             if (
                 target_pos not in self._select_balls and
-                self._board.get_item(target_pos) != Constant.NO_PLAYER
+                self._board.get_item(target_pos) != Const.NO_PLAYER
                 ):
                 return False
         return True
@@ -127,9 +127,9 @@ class Abalone:
     def _translate_ball(self, ball: vec2, direction: int) -> None:
         player_moving = self._board.get_item(ball)
         target_pos = self._get_next_position(ball, direction)
-        if self._board.get_item(target_pos) != Constant.NO_PLAYER:
+        if self._board.get_item(target_pos) != Const.NO_PLAYER:
             self._translate_ball(target_pos, direction)
-        self._board.set_item(ball, Constant.NO_PLAYER)
+        self._board.set_item(ball, Const.NO_PLAYER)
         if self._is_in_board(target_pos):
             self._board.set_item(target_pos, player_moving)
 
@@ -141,11 +141,11 @@ class Abalone:
         player_at_target = self._board.get_item(target_dir)
         while (
             self._is_in_board(target_dir) and
-            player_at_target != Constant.NO_PLAYER
+            player_at_target != Const.NO_PLAYER
             ):
             if (
                 player_at_target != self.get_player_turn() and
-                player_at_target != Constant.NO_PLAYER
+                player_at_target != Const.NO_PLAYER
                 ):
                 oposite_force += 1
             target_dir = self._get_next_position(target_dir, direction)
@@ -165,18 +165,18 @@ class Abalone:
         self.current_turn += 1
     
     def player_who_win(self):
-        score_p1 = self.get_score_of(Constant.PLAYER_ONE)
-        score_p2 = self.get_score_of(Constant.PLAYER_TWO)
-        if score_p1 <= Constant.LOSING_SCORE:
-            return Constant.PLAYER_TWO
-        if score_p2 <= Constant.LOSING_SCORE:
-            return Constant.PLAYER_ONE
-        return Constant.NO_PLAYER
+        score_p1 = self.get_score_of(Const.PLAYER_ONE)
+        score_p2 = self.get_score_of(Const.PLAYER_TWO)
+        if score_p1 <= Const.LOSING_SCORE:
+            return Const.PLAYER_TWO
+        if score_p2 <= Const.LOSING_SCORE:
+            return Const.PLAYER_ONE
+        return Const.NO_PLAYER
 
     def get_score_of(self, player: int) -> int:
         score = 0
-        for y in range(Constant.GRID_SIZE):
-            for x in range(Constant.GRID_SIZE):
+        for y in range(Const.GRID_SIZE):
+            for x in range(Const.GRID_SIZE):
                 pos = vec2(x, y)
                 if self._board.get_item(pos) == player and self._is_in_board(pos):
                     score += 1

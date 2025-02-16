@@ -1,7 +1,7 @@
 from game_nodes.abalone_node.abalone import Abalone
 import re
 
-from utils.constants import Constant
+from utils.constants import Const
 from utils.vec import vec2
 
 
@@ -14,8 +14,8 @@ class CliApp():
         wining_player = self._abalone.player_who_win()
         while wining_player == 0:
             print(self._abalone.get_grid_str())
-            print(f"P1:{self._abalone.get_score_of(Constant.PLAYER_ONE)} |", end=" ")
-            print(f"{self._abalone.get_score_of(Constant.PLAYER_TWO)}:P2")
+            print(f"P1:{self._abalone.get_score_of(Const.PLAYER_ONE)} |", end=" ")
+            print(f"{self._abalone.get_score_of(Const.PLAYER_TWO)}:P2")
             print(f"Tour du joueur : {self._abalone.get_player_turn()}")
             while not self._ball_selection():
                 print("Les boulles séléctionnées ne respecte pas les conditions de séléction")
