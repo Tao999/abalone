@@ -12,7 +12,7 @@ class VisuConst:
     PADDING = 10
     BALL_SIZE = 50
     BALL_SPACE = 5
-    DRAW_WIDTH = 3
+    OUTLINE_WIDTH = 3
 
     PLAYER_COLOR = ["", "#c4c4c4", "#3a3a3a"]
 

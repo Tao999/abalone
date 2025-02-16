@@ -13,7 +13,7 @@
 - b. [x] Faire une classe abstraite Node abstraite (méthode draw() et update())
 - c. [x] Dessiner AbaloneNode()
 - d. [x] Faire une fonction _world_grid_to_abalone_coord()
-- e. [ ] Survoller les boules, et mettre l'outline en vert si elle correspond au joueur courant
+- e. [x] Survoller les boules, et mettre l'outline en vert si elle correspond au joueur courant
 - f. [ ] Sélectionner les boules
 - g. [ ] Déplacer les boules
 - h. [ ] Animer le jeu

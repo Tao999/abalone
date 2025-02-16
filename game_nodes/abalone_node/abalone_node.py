@@ -23,27 +23,43 @@ class AbaloneNode(GameNode):
 
         for y in range(Const.GRID_SIZE):
             for x in range(Const.GRID_SIZE):
-                ball = self._abalone.get_ball_at(vec2(x, y))
-                if ball >= 0:
-                    offset = 0
-                    if y % 2:
-                        offset = VisuConst.BALL_SIZE//2
-                    ball_origin = vec2(self._ball_transform(
-                        x) + offset, self._ball_transform(y))
-                    ball_end = vec2(ball_origin.x + VisuConst.BALL_SIZE,
-                                    ball_origin.y + VisuConst.BALL_SIZE)
-                    color = VisuConst.PLAYER_COLOR[ball]
-                    mouse_position_in_board = self._world_grid_to_abalone_coord(mouse.get_position())
-                    outline_color = VisuConst.NOT_HOVERED_BALL
-                    if mouse_position_in_board == vec2(x, y):
-                        outline_color = VisuConst.HOVERED_BALL
-                    canvas.create_oval(ball_origin.x, ball_origin.y, ball_end.x, ball_end.y,
-                                       fill=color, width=VisuConst.DRAW_WIDTH, outline=outline_color)
+                self._draw_ball(vec2(x, y), canvas)
 
-    def _ball_transform(self, i: int) -> int:
-        return VisuConst.PADDING+i*VisuConst.BALL_SIZE + i*VisuConst.BALL_SPACE
+    def _draw_ball(self, position: vec2, canvas: Canvas) -> None:
+        ball = self._abalone.get_ball_at(position)
+        if ball < 0:
+            return
 
-    def _world_grid_to_abalone_coord(self, mouse_position: vec2) -> Optional[vec2]:
+        ball_origin = self._ball_transform(position)
+        ball_end = vec2(ball_origin.x + VisuConst.BALL_SIZE,
+                        ball_origin.y + VisuConst.BALL_SIZE)
+
+        ball_color = VisuConst.PLAYER_COLOR[ball]
+        outline_color = VisuConst.NOT_HOVERED_BALL
+        if self._is_hovering_ally_ball(position, ball):
+            outline_color = VisuConst.HOVERED_BALL
+
+        canvas.create_oval(ball_origin.x, ball_origin.y, ball_end.x, ball_end.y,
+                           fill=ball_color, width=VisuConst.OUTLINE_WIDTH, outline=outline_color)
+
+    def _is_hovering_ally_ball(self, position: vec2, ball: int) -> bool:
+        mouse_in_board = self._world_coord_to_board_coord(
+            mouse.get_position())
+        is_mouse_over_drawing_ball = mouse_in_board == vec2(
+            position.x, position.y)
+        is_drawing_ball_ally = ball == self._abalone.get_player_turn()
+        return is_mouse_over_drawing_ball and is_drawing_ball_ally
+
+    def _ball_transform(self, pos: vec2) -> vec2:
+        offset = 0
+        if pos.y % 2:
+            offset = VisuConst.BALL_SIZE//2
+        x = VisuConst.PADDING+pos.x*VisuConst.BALL_SIZE + \
+            pos.x*VisuConst.BALL_SPACE + offset
+        y = VisuConst.PADDING+pos.y*VisuConst.BALL_SIZE + pos.y*VisuConst.BALL_SPACE
+        return vec2(x, y)
+
+    def _world_coord_to_board_coord(self, mouse_position: vec2) -> Optional[vec2]:
 
         abalone_coord = self._get_board_coord(mouse_position)
 
@@ -65,7 +81,7 @@ class AbaloneNode(GameNode):
 
         relative_pos = vec2(x, y)
 
-        return vec2(0, 0).distance(relative_pos) <= HALF_BALL_SIZE
+        return vec2(0, 0).distance(relative_pos) <= HALF_BALL_SIZE + VisuConst.OUTLINE_WIDTH
 
     def _get_board_coord(self, mouse_position: vec2) -> vec2:
         x = mouse_position.x - VisuConst.PADDING
