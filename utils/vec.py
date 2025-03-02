@@ -13,6 +13,12 @@ class vec2():
 
     def __mul__(self, b):
         return vec2(int(self.x*b), int(self.y*b))
+    
+    def __truediv__(self, b):
+        return vec2(self.x//b, self.y//b)
+    
+    def __floordiv__(self, b):
+        return vec2(self.x//b, self.y//b)
 
     def __str__(self):
         return f"({self.x},{self.y})"
