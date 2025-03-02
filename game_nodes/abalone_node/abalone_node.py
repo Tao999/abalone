@@ -1,69 +1,55 @@
-from math import ceil
 from tkinter import Canvas
-from typing import Optional
+from game_nodes.abalone_node.game_states.game_state import GameState
+from game_nodes.abalone_node.game_states.selection_state import SelectionState
 from utils.abalone import Abalone
 from game_nodes.game_node import GameNode
-from utils.constants import Const, Dir
+from utils.constants import Const, VisuConst
 from utils.vec import vec2
-from utils.constants import VisuConst
-import game_nodes.abalone_node.draw_functions as df
-from utils.singletons import mouse
+from utils.singletons import mouse, abalone
 
 
 class AbaloneNode(GameNode):
     def __init__(self) -> None:
         super().__init__()
-        self._abalone = Abalone()
-        self.state = SelectionState(self._abalone)
+        self.state: GameState = SelectionState()
 
     def update(self, delta: float) -> None:
         super().update(delta)
-        self.state.update()
-
+        futur_state = self.state.update(delta)
+        if futur_state:
+            self.state = futur_state
+        
     def draw(self, canvas: Canvas) -> None:
         super().draw(canvas)
 
         for y in range(Const.GRID_SIZE):
             for x in range(Const.GRID_SIZE):
-                df._draw_ball(self._abalone, vec2(x, y), canvas)
+                self._draw_ball(vec2(x, y), canvas)
 
+    def _draw_ball(self, position: vec2, canvas: Canvas) -> None:
+        ball = abalone.get_ball_at(position)
+        if ball < 0:
+            return
 
-class SelectionState:
-    def __init__(self, abalone: Abalone) -> None:
-        self._is_first_ball_selected: bool = False
-        self._first_selected: Optional[vec2] = None
-        self._selected_direction: int = Dir.LEFT
-        self._nb_selected_ball: int = 1
-        self._abalone = abalone
+        ball_origin = AbaloneNode._board_pos_to_canvas_pos(position)
+        ball_end = vec2(ball_origin.x + VisuConst.BALL_SIZE,
+                        ball_origin.y + VisuConst.BALL_SIZE)
 
-    def update(self):
-        self._select_first_ball()
+        ball_color = VisuConst.PLAYER_COLOR[ball]
+        outline_color = VisuConst.NOT_HOVERED_BALL
+        if position in abalone.get_selected_balls():
+            outline_color = VisuConst.HOVERED_BALL
 
-    def _select_first_ball(self) -> None:
-        if not mouse.is_button_pressed() and not self._is_first_ball_selected:
-            position = df._world_coord_to_board_coord(
-                self._abalone, mouse.get_position())
-            if position:
-                self._abalone.select_balls_to_move(position, 0, 1)
-        elif mouse.is_button_pressed() and not self._is_first_ball_selected:
-            self._first_selected = df._world_coord_to_board_coord(
-                self._abalone, mouse.get_position())
-            if self._first_selected:
-                self._is_first_ball_selected = True
+        canvas.create_oval(ball_origin.x, ball_origin.y, ball_end.x, ball_end.y,
+                        fill=ball_color, width=VisuConst.OUTLINE_WIDTH, outline=outline_color)
 
-        elif mouse.is_button_pressed() and self._first_selected:
-            second_position = df._world_coord_to_board_coord(
-                self._abalone, mouse.get_position())
-            if second_position:
+    @staticmethod    
+    def _board_pos_to_canvas_pos(pos: vec2) -> vec2:
+        offset = 0
+        if pos.y % 2:
+            offset = VisuConst.BALL_SIZE//2
+        x = VisuConst.PADDING+pos.x*VisuConst.BALL_SIZE + \
+            pos.x*VisuConst.BALL_SPACE + offset
+        y = VisuConst.PADDING+pos.y*VisuConst.BALL_SIZE + pos.y*VisuConst.BALL_SPACE
+        return vec2(x, y)
 
-                self._selected_direction = Dir.get_direction_code(
-                    self._first_selected, second_position)
-
-                self._nb_selected_ball = Dir.get_nb_selected_ball(
-                    self._first_selected, second_position)
-                self._abalone.select_balls_to_move(
-                    self._first_selected, self._selected_direction, self._nb_selected_ball)
-
-        elif not mouse.is_button_pressed() and self._first_selected:
-            # On doit sortir de cette état
-            ...

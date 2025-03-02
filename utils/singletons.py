@@ -1,3 +1,4 @@
+from utils.abalone import Abalone
 from utils.vec import vec2
 
 
@@ -20,3 +21,4 @@ class Mouse:
 
 
 mouse = Mouse()
+abalone = Abalone()
