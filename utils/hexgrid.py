@@ -27,7 +27,10 @@ class HexGrid:
         return output
 
     def get_item(self, pos: vec2) -> int:
-        return self._grid[pos.x][pos.y]
+        try:
+            return self._grid[pos.x][pos.y]
+        except IndexError:
+            return 0
 
     def set_item(self, pos: vec2, value: int) -> None:
         self._grid[pos.x][pos.y] = value
