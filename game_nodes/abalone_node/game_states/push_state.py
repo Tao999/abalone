@@ -35,7 +35,5 @@ class PushState(GameState):
         for ball_pos in balls:
             corrected = abno.AbaloneNode._board_pos_to_canvas_pos(ball_pos)
             pos_sum += corrected
-            print(corrected, mouse.get_position())
-        
 
         return pos_sum//len(balls)
