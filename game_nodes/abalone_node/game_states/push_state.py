@@ -17,10 +17,12 @@ class PushState(GameState):
             self._center_of_selected_ball, mouse.get_position())
 
 
-        if mouse.is_button_pressed():
+        if mouse.is_button_pressed(mouse.LEFT_BUTTON):
             self._is_triggerd = True
         elif self._is_triggerd and abalone.move_selected_balls(direction_code):
             abalone.next_turn()
+            return sels.SelectionState()
+        elif mouse.is_button_pressed(mouse.RIGHT_BUTTON):
             return sels.SelectionState()
         else:
             self._is_triggerd = False

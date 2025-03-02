@@ -25,15 +25,21 @@ class WindowApp:
         mouse.set_position(vec2(e.x, e.y))
     
     def _mouse_pressed_callback(self, e: tk.Event) -> None:
-        mouse.set_button_pressed(True)
+        if e.num == 1:
+            mouse.press_button(mouse.LEFT_BUTTON)
+        elif e.num == 3:
+            mouse.press_button(mouse.RIGHT_BUTTON)
     
     def _mouse_release_callback(self, e: tk.Event) -> None:
-        mouse.set_button_pressed(False)
-
+        if e.num == 1:
+            mouse.unpress_button(mouse.LEFT_BUTTON)
+        elif e.num == 3:
+            mouse.unpress_button(mouse.RIGHT_BUTTON)
+        
     def run(self) -> None:
         self._root.bind('<Motion>', self._mouse_motion_callback)
-        self._root.bind('<ButtonPress-1>', self._mouse_pressed_callback)
-        self._root.bind('<ButtonRelease-1>', self._mouse_release_callback)
+        self._root.bind('<ButtonPress>', self._mouse_pressed_callback)
+        self._root.bind('<ButtonRelease>', self._mouse_release_callback)
         self._nodes.append(AbaloneNode())
         self.update()
         self._root.mainloop()

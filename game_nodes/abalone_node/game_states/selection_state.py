@@ -18,16 +18,16 @@ class SelectionState(GameState):
 
 
     def update(self, delta: float) -> Optional[GameState]:
-        if not mouse.is_button_pressed() and not self._is_first_ball_selected:
+        if not mouse.is_button_pressed(mouse.LEFT_BUTTON) and not self._is_first_ball_selected:
             self._hover_first_ball()
 
-        elif mouse.is_button_pressed() and not self._is_first_ball_selected:
+        elif mouse.is_button_pressed(mouse.LEFT_BUTTON) and not self._is_first_ball_selected:
             self._select_first_ball()
 
-        elif mouse.is_button_pressed() and self._first_selected:
+        elif mouse.is_button_pressed(mouse.LEFT_BUTTON) and self._first_selected:
             self._select_firection_and_nb_ball()
 
-        elif not mouse.is_button_pressed() and self._first_selected:
+        elif not mouse.is_button_pressed(mouse.LEFT_BUTTON) and self._first_selected:
             return pus.PushState()
         return None
 
