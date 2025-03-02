@@ -113,7 +113,12 @@ class Abalone:
     def _is_move_legal(self, direction: int) -> bool:
         for ball in self._select_balls:
             next_pos = self._get_next_position(ball, direction)
-            if not self.is_in_board(next_pos):
+            
+            is_in_board = self.is_in_board(next_pos)
+            is_next_pos_current_player = self.get_ball_at(next_pos) == self.get_player_turn()
+            is_next_pos_in_selected = next_pos in self._select_balls
+            is_legal = is_in_board and (not is_next_pos_current_player or is_next_pos_in_selected)
+            if not is_legal:
                 return False
         return True
 
@@ -166,6 +171,7 @@ class Abalone:
 
     def next_turn(self) -> None:
         self.current_turn += 1
+        self._select_balls = []
 
     def player_who_win(self):
         score_p1 = self.get_score_of(Const.PLAYER_ONE)
