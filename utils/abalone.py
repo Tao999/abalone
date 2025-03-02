@@ -106,9 +106,14 @@ class Abalone:
         if self._is_way_free(direction):
             for ball in self._select_balls:
                 self._translate_ball(ball, direction)
-        else:
+        elif self._is_push_in_line(direction):
             return self._do_sumito(direction)
+        else:
+            return False
         return True
+
+    def _is_push_in_line(self, direction: int):
+        return self._selection_direction % 3 == direction % 3
 
     def _is_move_legal(self, direction: int) -> bool:
         for ball in self._select_balls:
@@ -164,6 +169,7 @@ class Abalone:
 
         for ball in self._select_balls:
             self._translate_ball(ball, direction)
+        print("sumito")
         return True
 
     def get_player_turn(self) -> int:
