@@ -199,3 +199,10 @@ class Abalone:
 
     def get_selected_balls(self) -> list[vec2]:
         return self._select_balls
+    
+    def reset_game(self) -> None:
+        self._board = HexGrid(Const.GRID_SIZE)
+        self._select_balls = []
+        self.current_turn = 0
+        self._selection_direction = Dir.LEFT
+        self._init_balls()

@@ -3,6 +3,7 @@ from game_nodes.abalone_node.game_states.game_state import GameState
 from game_nodes.abalone_node.game_states.selection_state import SelectionState
 from game_nodes.game_node import GameNode
 import game_nodes.menu_node.menu_node as mn
+from utils.abalone import Abalone
 from utils.constants import Const, VisuConst
 from utils.vec import vec2
 from utils.singletons import abalone
@@ -14,6 +15,7 @@ class AbaloneNode(GameNode):
         super().__init__(parent, root)
         self.state: GameState = SelectionState()
         self._root.bind('<Escape>', self.back_to_menu)
+        abalone.reset_game()
 
 
     def update(self, delta: float) -> None:
@@ -31,6 +33,7 @@ class AbaloneNode(GameNode):
     
     def back_to_menu(self, canvas: Canvas) -> None:
         self._parent.clear_nodes()
+        self._root.unbind('<Escape>')
         self._parent.add_node(mn.MenuNode(self._parent, self._root))
 
     @staticmethod    
