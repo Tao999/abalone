@@ -18,6 +18,7 @@
 - [x] Faire un game state : ball_push
 - [x] Déplacer les boules
 - [x] Preview d'ou les boules vont être avant le push
-- [ ] Ajouter un menu principale
+- [x] Ajouter un menu principale
+- [ ] Ajouter la condition de victoire au jeu
 - [ ] Animer le jeu
 - [ ] Ajouter du son

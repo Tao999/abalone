@@ -2,15 +2,19 @@ from tkinter import Canvas
 from game_nodes.abalone_node.game_states.game_state import GameState
 from game_nodes.abalone_node.game_states.selection_state import SelectionState
 from game_nodes.game_node import GameNode
+import game_nodes.menu_node.menu_node as mn
 from utils.constants import Const, VisuConst
 from utils.vec import vec2
 from utils.singletons import abalone
+import tkinter as tk
 
 
 class AbaloneNode(GameNode):
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, parent: GameNode, root: tk.Tk) -> None:
+        super().__init__(parent, root)
         self.state: GameState = SelectionState()
+        self._root.bind('<Escape>', self.back_to_menu)
+
 
     def update(self, delta: float) -> None:
         super().update(delta)
@@ -24,23 +28,10 @@ class AbaloneNode(GameNode):
         for y in range(Const.GRID_SIZE):
             for x in range(Const.GRID_SIZE):
                 self.state.draw_ball(vec2(x, y), canvas)
-
-    # def _draw_ball(self, position: vec2, canvas: Canvas) -> None:
-    #     ball = abalone.get_ball_at(position)
-    #     if ball < 0:
-    #         return
-
-    #     ball_origin = AbaloneNode._board_pos_to_canvas_pos(position)
-    #     ball_end = vec2(ball_origin.x + VisuConst.BALL_SIZE,
-    #                     ball_origin.y + VisuConst.BALL_SIZE)
-
-    #     ball_color = VisuConst.PLAYER_COLOR[ball]
-    #     outline_color = VisuConst.NOT_HOVERED_BALL
-    #     if position in abalone.get_selected_balls():
-    #         outline_color = VisuConst.HOVERED_BALL
-
-    #     canvas.create_oval(ball_origin.x, ball_origin.y, ball_end.x, ball_end.y,
-    #                     fill=ball_color, width=VisuConst.OUTLINE_WIDTH, outline=outline_color)
+    
+    def back_to_menu(self, canvas: Canvas) -> None:
+        self._parent.clear_nodes()
+        self._parent.add_node(mn.MenuNode(self._parent, self._root))
 
     @staticmethod    
     def _board_pos_to_canvas_pos(pos: vec2) -> vec2:
