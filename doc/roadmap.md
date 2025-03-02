@@ -1,23 +1,23 @@
 # Feuille de route
 
 ## 1. Création du jeu en cli
-- a. [x] Faire grille hexagonale
-- b. [x] Placer les boules sur la grille
-- c. [x] Sélection de plusieurs boules à faire bouger
-- d. [x] Faire bouger les boules séléctionnées sur la grille
-- e. [x] Implémenter les conditions de victoire
-- f. [x] Faire un jeu en cli
+- [x] Faire grille hexagonale
+- [x] Placer les boules sur la grille
+- [x] Sélection de plusieurs boules à faire bouger
+- [x] Faire bouger les boules séléctionnées sur la grille
+- [x] Implémenter les conditions de victoire
+- [x] Faire un jeu en cli
 
 ## 2. Création du mode graphique
-- a. [x] Faire une classe de gestion de fenêtre
-- b. [x] Faire une classe abstraite Node abstraite (méthode draw() et update())
-- c. [x] Dessiner AbaloneNode()
-- d. [x] Faire une fonction _world_grid_to_abalone_coord()
-- e. [x] Survoller les boules, et mettre l'outline en vert si elle correspond au joueur courant
-- f. [x] Faire un game state : ball_selection
-- g. [x] Faire un game state : ball_push
-- h. [x] Déplacer les boules
-- i. [ ] Preview d'ou les boules vont être avant le push
-- j. [ ] Animer le jeu
-- k. [ ] Ajouter un menu principale
-- l. [ ] Ajouter du son
+- [x] Faire une classe de gestion de fenêtre
+- [x] Faire une classe abstraite Node abstraite (méthode draw() et update())
+- [x] Dessiner AbaloneNode()
+- [x] Faire une fonction _world_grid_to_abalone_coord()
+- [x] Survoller les boules, et mettre l'outline en vert si elle correspond au joueur courant
+- [x] Faire un game state : ball_selection
+- [x] Faire un game state : ball_push
+- [x] Déplacer les boules
+- [x] Preview d'ou les boules vont être avant le push
+- [ ] Ajouter un menu principale
+- [ ] Animer le jeu
+- [ ] Ajouter du son

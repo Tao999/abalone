@@ -21,6 +21,7 @@ class VisuConst:
 
     BACKGROUND_COLOR = "#654526"
 
+    NEXT_BALL_POSITION = "#d9ed02"
     HOVERED_BALL = "#00bf00"
     NOT_HOVERED_BALL = "#000000"
 
