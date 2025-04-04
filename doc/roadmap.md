@@ -19,6 +19,9 @@
 - [x] Déplacer les boules
 - [x] Preview d'ou les boules vont être avant le push
 - [x] Ajouter un menu principale
-- [ ] Ajouter la condition de victoire au jeu
-- [ ] Animer le jeu
-- [ ] Ajouter du son
+- [x] Ajouter la condition de victoire au jeu
+- [x] Petite doc pour comment jouer
+- [/] Animer le jeu
+- [/] Ajouter du son
+
+Flemme de le finir correctement

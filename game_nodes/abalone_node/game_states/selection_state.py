@@ -40,6 +40,8 @@ class SelectionState(GameState):
     def _select_first_ball(self) -> None:
         pre_select = SelectionState._world_coord_to_board_coord(
             mouse.get_position())
+        if pre_select is None:
+            return
         if abalone.get_ball_at(pre_select) == abalone.get_player_turn():
             self._first_selected = pre_select
         if self._first_selected:
