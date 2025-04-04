@@ -3,6 +3,7 @@ from game_nodes.abalone_node.game_states.game_state import GameState
 from game_nodes.abalone_node.game_states.selection_state import SelectionState
 from game_nodes.game_node import GameNode
 import game_nodes.menu_node.menu_node as mn
+from game_nodes.winner_node.winner_node import WinnerNode
 from utils.abalone import Abalone
 from utils.constants import Const, VisuConst
 from utils.vec import vec2
@@ -23,6 +24,11 @@ class AbaloneNode(GameNode):
         futur_state = self.state.update(delta)
         if futur_state:
             self.state = futur_state
+            
+        winner = abalone.player_who_win()
+        if winner != Const.NO_PLAYER:
+            self._parent.clear_nodes()
+            self._parent.add_node(WinnerNode(self._parent, self._root, winner))
         
     def draw(self, canvas: Canvas) -> None:
         super().draw(canvas)

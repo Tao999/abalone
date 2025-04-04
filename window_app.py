@@ -11,7 +11,6 @@ from utils.vec import vec2
 class WindowApp(GameNode):
     def __init__(self, width: int, height: int) -> None:
         self._root = tk.Tk()
-        self._root.title("Tkinter Canvas Loop")
         self._root.resizable(False, False)
         self._canvas = tk.Canvas(
             self._root, width=width, height=height, bg=VisuConst.BACKGROUND_COLOR)

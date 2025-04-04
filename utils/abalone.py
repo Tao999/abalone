@@ -169,7 +169,6 @@ class Abalone:
 
         for ball in self._select_balls:
             self._translate_ball(ball, direction)
-        print("sumito")
         return True
 
     def get_player_turn(self) -> int:
